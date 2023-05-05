@@ -47,10 +47,19 @@ class Rom(var file: File) {
     val buffer: Buffer
         get() = Buffer(this)
 
+
     /**
      * The data the rom has provided
      */
     lateinit var data: ByteArray
+
+    /**
+     * The addresses where specific information about the rom
+     * are to be found.
+     *
+     * Ex: Pokemon names, sprites, maps, etc
+     */
+    var addresses = RomAddresses()
 
     /**
      * Update flags for the ROM if it is a specific

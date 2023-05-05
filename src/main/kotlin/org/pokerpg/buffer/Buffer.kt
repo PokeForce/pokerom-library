@@ -21,5 +21,35 @@ class Buffer(private val rom: Rom) {
         return String(BufferUtils.getBytes(rom.data, offset, length))
     }
 
+    /**
+     * Reads a string of PokeText from the specified offset with the specified length.
+     *
+     * If a length is specified, returns the converted PokeText string.
+     *
+     * If no length is specified, reads from the specified offset until the end of the text.
+     * Returns the converted PokeText string that was read.
+     *
+     * @param offset The offset to read from.
+     * @param length The length of the PokeText string to read.
+     * @return The PokeText string that was read.
+     */
+    fun readPokemonString(offset: Int, length: Int = -1): String? {
+        return if (length > -1) {
+            // If length is specified, return converted PokeText string
+            PokemonText.toAscii(BufferUtils.getBytes(rom.data, offset, length))
+        } else {
+            // Read from specified offset until end of text
+            var b: Byte = 0x0
+            var i = 0
+
+            while (b.toInt() != -1) {
+                b = rom.data[offset + i]
+                i++
+            }
+            PokemonText.toAscii(BufferUtils.getBytes(rom.data, offset, i))
+        }
+    }
+
+
 }
 

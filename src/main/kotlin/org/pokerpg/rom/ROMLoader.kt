@@ -1,8 +1,23 @@
 package org.pokerpg.rom
 
+import org.pokerpg.yaml.Properties
 import java.io.IOException
+import java.nio.file.Paths
 
 object RomLoader {
+
+    /**
+     * Loads addresses from the specified YAML file into the current ROM instance.
+     *
+     * @return the current ROM instance.
+     */
+    fun Rom.loadAddresses(): Rom {
+        val romAddresses = Properties()
+        romAddresses.loadYaml(Paths.get("./data/addresses.yml").toFile())
+        addresses.pokemonNames = romAddresses.getOrDefault("pokemon-names", 0)
+        return this
+    }
+
 
     /**
      * Loads a ROM from the roms attached file, reads the metadata, and sets the ROM object's properties.
