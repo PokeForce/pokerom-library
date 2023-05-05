@@ -1,4 +1,4 @@
-<p align="center"><img src="https://cdn.discordapp.com/attachments/1067274729205010463/1103932164724240434/image.png" alt="Open Source ROM Library for Pokemon Generation III" />
+<p align="center"><img src="https://cdn.discordapp.com/attachments/1067274729205010463/1103933735725965322/image.png" alt="Open Source ROM Library for Pokemon Generation III" />
 </p>
 
 # pokerom-library
