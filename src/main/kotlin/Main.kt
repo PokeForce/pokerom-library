@@ -1,4 +1,4 @@
-import org.pokerpg.rom.ROMLoader.load
+import org.pokerpg.rom.RomLoader.load
 import org.pokerpg.rom.Rom
 import java.io.File
 import java.util.logging.Level

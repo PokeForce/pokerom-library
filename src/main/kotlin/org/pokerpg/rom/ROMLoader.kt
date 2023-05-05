@@ -2,7 +2,7 @@ package org.pokerpg.rom
 
 import java.io.IOException
 
-object ROMLoader {
+object RomLoader {
 
     /**
      * Loads a ROM from the roms attached file, reads the metadata, and sets the ROM object's properties.
