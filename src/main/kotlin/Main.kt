@@ -1,9 +1,9 @@
-import org.pokerpg.buffer.PokemonText
+import org.pokerpg.definitions.consts.PIKACHU
+import org.pokerpg.definitions.pokemon.PokemonNames.getPokemonName
 import org.pokerpg.rom.Rom
 import org.pokerpg.rom.RomLoader.load
 import org.pokerpg.rom.RomLoader.loadAddresses
 import java.nio.file.Paths
-import java.util.logging.Level
 
 /**
  * Main entry point for the application.
@@ -15,9 +15,6 @@ fun main(args: Array<String>) {
     // Direct path to ROM
     val rom = Rom(file = Paths.get(args[0]).toFile())
 
-    // Load PokeText character mappings from file
-    PokemonText.loadFromFile(Paths.get("./data/poketable.ini").toFile())
-
     // Load ROM addresses from file
     rom.loadAddresses()
 
@@ -25,11 +22,10 @@ fun main(args: Array<String>) {
     rom.load()
 
     // Log information about the loaded ROM
-    rom.logger.log(Level.INFO, "Loaded ${rom.gameCode} ${rom.gameName} by ${rom.gameCreator}")
+    Rom.log("Loaded ${rom.gameCode} ${rom.gameName} by ${rom.gameCreator}")
 
-    // Read the name of the 151st Pokémon from ROM data (Mew)
-    val offset = (rom.addresses.pokemonNames + (151 * 11))
-    rom.logger.log(Level.INFO, "${rom.addresses.pokemonNames} - ${rom.buffer.readPokemonString(offset)}")
+    /** Try loading a Pokemons name from the `pokemon-names` ROM address. **/
+    Rom.log("I choose you, ${rom.getPokemonName(PIKACHU).lowercase()}!")
 }
 
 

@@ -8,8 +8,9 @@ import java.nio.charset.StandardCharsets
  * @since 30/04/2017
  *
  * TODO: Update this to use different file format
- * Note, Ally: Would've used .yaml but it has a thing against special characters I suppose
+ * Note, Ally: Would've used .yaml, but it has a thing against special characters I suppose
  */
+@Suppress("UNUSED")
 object PokemonText {
     private val hexTable = mutableMapOf<String, String>()
 

@@ -8,6 +8,7 @@ import kotlin.math.absoluteValue
 /**
  * A utility object that provides methods for converting and manipulating byte arrays and integers.
  */
+@Suppress("UNUSED")
 object BufferUtils {
 
     /**
@@ -204,8 +205,8 @@ object BufferUtils {
      * @return The value of the specified bit range.
      */
     fun getBitRange(value: Int, from: Int, to: Int): Int {
-        val adjustedFrom = 16 - to
-        val adjustedTo = 16 - from
+        val adjustedFrom: Int = 16 - to
+        val adjustedTo: Int = 16 - from
 
         val bits = adjustedTo - adjustedFrom
         val rightShifted = value shr adjustedFrom

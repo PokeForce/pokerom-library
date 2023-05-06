@@ -1,84 +1,97 @@
 package org.pokerpg.rom
 
 import org.pokerpg.buffer.Buffer
-import org.pokerpg.game.Game
+import org.pokerpg.buffer.PokemonText
 import java.io.File
+import java.nio.file.Paths
+import java.util.logging.Level
 import java.util.logging.Logger
 
 /**
+ * Represents a Pokémon ROM, containing information about the game, its addresses, and the attached buffer.
+ *
+ * @property file The file containing the ROM data.
  * @author Alycia <https://github.com/alycii>
  */
 class Rom(var file: File) {
 
     /**
-     * Gets the Game code from the ROM
+     * Initializes the class by loading the Pokémon text data from the poketable.ini file.
+     */
+    init {
+        PokemonText.loadFromFile(Paths.get("./data/poketable.ini").toFile())
+    }
+
+
+    /**
+     * The game code of the ROM.
      */
     lateinit var gameCode: String
 
     /**
-     * Gets the Game version from the ROM
-     */
-    lateinit var game: Game
-
-    /**
-     * Gets the Games name from the ROM
+     * The name of the game in the ROM.
      */
     lateinit var gameName: String
 
     /**
-     * Gets the Games creator identification as a string
-     * Example: 01 is GameFreak's Company ID
+     * The game creator's identification as a string (e.g., "01" is GameFreak's company ID).
      */
     lateinit var gameCreator: String
 
     /**
-     * If the ROM has had a patch attached to it
+     * Indicates whether the ROM has been patched.
      */
-    private var patched: Boolean = false
+    var patched: Boolean = false
 
     /**
-     * If the ROM has had RTC attached to it
+     * Indicates whether the ROM has a real-time clock.
      */
-    private var rtc: Boolean = false
+    private var realTimeClock: Boolean = false
 
     /**
-     * The Buffer attached to this ROM
+     * The buffer attached to this ROM.
      */
     val buffer: Buffer
         get() = Buffer(this)
 
-
     /**
-     * The data the rom has provided
+     * The data provided by the ROM.
      */
     lateinit var data: ByteArray
 
     /**
-     * The addresses where specific information about the rom
-     * are to be found.
-     *
-     * Ex: Pokemon names, sprites, maps, etc
+     * The addresses where specific information about the ROM can be found.
+     * Examples: Pokémon names, sprites, maps, etc.
      */
     var addresses = RomAddresses()
 
     /**
-     * Update flags for the ROM if it is a specific
-     * game version
+     * Updates flags for the ROM if it is a specific game version.
      */
     fun setFlags() {
-        when(gameCode) {
+        when (gameCode) {
             "BPRE" -> {
-                patched = true
-            }
-            "BPEE" -> {
-                rtc = true
+                if (buffer.readByte(0x427).toInt() == 28) {
+                    patched = true
+                }
             }
         }
     }
+    companion object {
 
-    /**
-     * The logger
-     */
-    val logger: Logger = Logger.getLogger(Rom::class.java.name)
+        /**
+         * The logger for the Rom class.
+         */
+        private val logger: Logger = Logger.getLogger(Rom::class.java.name)
+
+        /**
+         * Logs the provided message at the INFO level using the logger.
+         *
+         * @param message The message to be logged.
+         */
+        fun log(message: String) {
+            logger.log(Level.INFO, message)
+        }
+    }
 
 }

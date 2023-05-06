@@ -11,6 +11,27 @@ import org.pokerpg.rom.Rom
 class Buffer(private val rom: Rom) {
 
     /**
+     * Reads a single byte from the buffer at the specified offset.
+     *
+     * @param offset The offset of the byte in the ROM data.
+     * @return The byte read from the buffer.
+     */
+    fun readByte(offset: Int): Byte {
+        return readBytes(offset)[0]
+    }
+
+    /**
+     * Reads a specified number of bytes from the buffer, starting at the specified offset.
+     *
+     * @param offset The offset of the bytes in the ROM data.
+     * @param size The number of bytes to read.
+     * @return The ByteArray read from the buffer.
+     */
+    private fun readBytes(offset: Int, size: Int = 1): ByteArray {
+        return BufferUtils.getBytes(rom.data, offset, size)
+    }
+
+    /**
      * Reads a string from the buffer, starting at the specified offset and with the specified length.
      *
      * @param offset The offset of the string in the ROM data.
@@ -22,34 +43,23 @@ class Buffer(private val rom: Rom) {
     }
 
     /**
-     * Reads a string of PokeText from the specified offset with the specified length.
-     *
-     * If a length is specified, returns the converted PokeText string.
-     *
-     * If no length is specified, reads from the specified offset until the end of the text.
-     * Returns the converted PokeText string that was read.
-     *
-     * @param offset The offset to read from.
-     * @param length The length of the PokeText string to read.
-     * @return The PokeText string that was read.
+     * Reads and converts a Pokétext string from the specified ROM offset.
+     * @param offset The ROM offset to start reading from.
+     * @param length The length of the Pokétext string to read, or -1 to read until the end of the text.
+     * @return The converted string, or null if the byte array is empty or the offset is invalid.
      */
-    fun readPokemonString(offset: Int, length: Int = -1): String? {
+    fun readPokemonString(offset: Int, length: Int = -1): String {
         return if (length > -1) {
-            // If length is specified, return converted PokeText string
             PokemonText.toAscii(BufferUtils.getBytes(rom.data, offset, length))
         } else {
-            // Read from specified offset until end of text
             var b: Byte = 0x0
             var i = 0
 
-            while (b.toInt() != -1) {
+            while (b.toInt() != 0x50) {
                 b = rom.data[offset + i]
                 i++
             }
             PokemonText.toAscii(BufferUtils.getBytes(rom.data, offset, i))
         }
     }
-
-
 }
-
