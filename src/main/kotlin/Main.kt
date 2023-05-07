@@ -1,19 +1,18 @@
 import org.pokerpg.definitions.DefinitionType
 import org.pokerpg.rom.Rom
 import org.pokerpg.rom.RomLoader.load
-import org.pokerpg.rom.RomLoader.loadDefinitions
 import org.pokerpg.util.PIKACHU
 import java.nio.file.Paths
 
 /**
  * Main entry point for the application.
  *
- * @param args command-line arguments
+ * @author Alycia <https://github.com/alycii>
  */
-fun main(args: Array<String>) {
+fun main() {
 
     // Direct path to ROM
-    val rom = Rom(file = Paths.get(args[0]).toFile()).load()
+    val rom = Rom(file = Paths.get("./rom/test.gba").toFile()).load()
 
     // Log information about the loaded ROM
     Rom.log("Loaded ${rom.gameCode} ${rom.gameName} by ${rom.gameCreator}")

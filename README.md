@@ -1,4 +1,4 @@
-<p align="center"><img src="https://cdn.discordapp.com/attachments/1067274729205010463/1104297375247372298/image.png" alt="Open Source ROM Library for Pokemon Generation III" />
+<p align="center"><img src="https://cdn.discordapp.com/attachments/1067274729205010463/1104640330671861760/image.png" alt="Open Source ROM Library for Pokemon Generation III" />
 </p>
 
 # PokéROM Kotlin Library
