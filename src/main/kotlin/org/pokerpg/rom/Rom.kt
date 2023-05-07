@@ -3,9 +3,7 @@ package org.pokerpg.rom
 import org.pokerpg.definitions.Definition
 import org.pokerpg.definitions.DefinitionType
 import org.pokerpg.io.Buffer
-import org.pokerpg.io.HexToString
 import java.io.File
-import java.nio.file.Paths
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -62,6 +60,9 @@ class Rom(var file: File) {
     /**
      * The addresses where specific information about the ROM can be found.
      * Examples: Pokémon names, sprites, maps, etc.
+     *
+     * Added to the ROM at runtime to in order to support different types of
+     * roms
      */
     var addresses = RomAddresses()
 

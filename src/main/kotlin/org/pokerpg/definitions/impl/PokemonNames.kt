@@ -15,7 +15,7 @@ object PokemonNames : Definition<String>(DefinitionType.PokemonNames) {
      * @param index The index of the Pokémon (0-based).
      * @return The name of the Pokémon at the specified index, or `null` if the index is out of range.
      */
-    fun Rom.getPokemonName(index: Int): String {
+    private fun Rom.getPokemonName(index: Int): String {
         // Name length is fixed at 11 characters
         val nameLength = 11
 

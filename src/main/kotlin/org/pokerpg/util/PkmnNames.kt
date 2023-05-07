@@ -1,9 +1,9 @@
+@file:Suppress("unused")
 package org.pokerpg.util
 
 /**
  * @author Alycia <https://github.com/alycii>
  */
-
 const val BULBASAUR = 1
 const val IVYSAUR = 2
 const val VENUSAUR = 3
