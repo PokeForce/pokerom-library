@@ -1,5 +1,5 @@
-import org.pokerpg.definitions.consts.PIKACHU
-import org.pokerpg.definitions.pokemon.PokemonNames.getPokemonName
+import org.pokerpg.definitions.DefinitionType
+import org.pokerpg.util.PIKACHU
 import org.pokerpg.rom.Rom
 import org.pokerpg.rom.RomLoader.load
 import org.pokerpg.rom.RomLoader.loadAddresses
@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
     Rom.log("Loaded ${rom.gameCode} ${rom.gameName} by ${rom.gameCreator}")
 
     /** Try loading a Pokemons name from the `pokemon-names` ROM address. **/
-    Rom.log("I choose you, ${rom.getPokemonName(PIKACHU).lowercase()}!")
+    Rom.log("I choose you, ${rom.definition<String>(type = DefinitionType.PokemonNames, index = PIKACHU).lowercase()}!")
 }
 
 

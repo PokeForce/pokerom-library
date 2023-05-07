@@ -1,12 +1,11 @@
-package org.pokerpg.buffer
+package org.pokerpg.io
 
 import kotlin.math.absoluteValue
 
 /**
- * @author Alycia <https://github.com/alycii>
- */
-/**
  * A utility object that provides methods for converting and manipulating byte arrays and integers.
+ *
+ * @author Alycia <https://github.com/alycii>
  */
 @Suppress("UNUSED")
 object BufferUtils {

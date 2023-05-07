@@ -1,4 +1,4 @@
-package org.pokerpg.buffer
+package org.pokerpg.io
 
 import java.io.*
 import java.nio.charset.StandardCharsets

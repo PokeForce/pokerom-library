@@ -1,7 +1,9 @@
 package org.pokerpg.rom
 
-import org.pokerpg.buffer.Buffer
-import org.pokerpg.buffer.PokemonText
+import org.pokerpg.io.Buffer
+import org.pokerpg.io.PokemonText
+import org.pokerpg.definitions.Definition
+import org.pokerpg.definitions.DefinitionType
 import java.io.File
 import java.nio.file.Paths
 import java.util.logging.Level
@@ -16,12 +18,17 @@ import java.util.logging.Logger
 class Rom(var file: File) {
 
     /**
+     * A map that holds registered definitions associated with their DefinitionType.
+     * It allows for efficient retrieval of definitions by their type.
+     */
+    private val definitionsMap: MutableMap<DefinitionType, Definition<*>> = mutableMapOf()
+
+    /**
      * Initializes the class by loading the Pokémon text data from the poketable.ini file.
      */
     init {
         PokemonText.loadFromFile(Paths.get("./data/poketable.ini").toFile())
     }
-
 
     /**
      * The game code of the ROM.
@@ -77,6 +84,34 @@ class Rom(var file: File) {
             }
         }
     }
+
+    /**
+     * Registers the provided definitions to the definitionsMap, using their associated DefinitionType as keys.
+     *
+     * @param definitions A variable number of Definition instances to be registered.
+     */
+    fun registerDefinitions(vararg definitions: Definition<*>) {
+        for (definition in definitions) {
+            definitionsMap[definition.type] = definition
+        }
+    }
+
+    /**
+     * Retrieves a definition for a given DefinitionType and index.
+     *
+     * @param T The expected type of the returned definition value.
+     * @param type The DefinitionType associated with the desired definition.
+     * @param index The index to be used when calling the getDefinition function in the Definition class.
+     * @return The definition value of type T for the given DefinitionType and index.
+     * @throws IllegalArgumentException If the provided DefinitionType is not found in the definitionsMap.
+     */
+    fun <T> definition(type: DefinitionType, index: Int): T {
+        val definition = definitionsMap[type] ?: throw IllegalArgumentException("Invalid DefinitionType: $type")
+        @Suppress("UNCHECKED_CAST")
+        return (definition as Definition<T>).getDefinition(this, index)
+    }
+
+
     companion object {
 
         /**

@@ -1,4 +1,4 @@
-package org.pokerpg.definitions.consts
+package org.pokerpg.util
 
 /**
  * @author Alycia <https://github.com/alycii>

@@ -1,9 +1,13 @@
 package org.pokerpg.rom
 
-import org.pokerpg.yaml.Properties
+import org.pokerpg.definitions.impl.PokemonNames
+import org.pokerpg.util.Properties
 import java.io.IOException
 import java.nio.file.Paths
 
+/**
+ * @author Alycia <https://github.com/alycii>
+ */
 object RomLoader {
 
     /**
@@ -16,6 +20,7 @@ object RomLoader {
         val romAddresses = Properties()
         romAddresses.loadYaml(Paths.get("./data/addresses.yml").toFile())
         addresses.pokemonNames = romAddresses.getOrDefault("pokemon-names", 0)
+        registerDefinitions(PokemonNames)
         return this
     }
 
