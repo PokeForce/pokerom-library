@@ -47,4 +47,45 @@ class Properties {
         return this
     }
 
+    /**
+     * A mutable map that stores ROM names as keys and their corresponding
+     * structure properties as values.
+     */
+    private val romsProperties = mutableMapOf<String, Map<String, Any?>>()
+
+    /**
+     * Gets the property associated with the [key] for the specified [romName]. If it cannot
+     * be found, it will return the [default] value instead.
+     *
+     * @param romName The name of the ROM to get the property from.
+     * @param key The key associated with the property.
+     * @param default The default value to return if the property is not found.
+     * @return The property value or the default value if not found.
+     */
+    fun <T> getOrDefault(romName: String, key: String, default: T): T {
+        val romProperties = romsProperties[romName]
+        @Suppress("UNCHECKED_CAST")
+        return romProperties?.get(key) as? T ?: default
+    }
+
+    /**
+     * Loads a YAML file containing ROM addresses and populates the [romsProperties] map.
+     *
+     * @param file The file containing the ROM addresses in YAML format.
+     * @return The current instance of the [Properties] class.
+     */
+    fun loadRomAddresses(file: File): Properties {
+        val mapper = ObjectMapper(YAMLFactory())
+        val values = mapper.readValue(file, HashMap<String, List<Map<String, Any>>>().javaClass)
+
+        values["roms"]?.forEach { rom ->
+            val romName = rom["game-code"] as? String ?: return@forEach
+            @Suppress("UNCHECKED_CAST")
+            val structure = rom["structure"] as? Map<String, Any?> ?: return@forEach
+            romsProperties[romName] = structure
+        }
+
+        return this
+    }
+
 }

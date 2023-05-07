@@ -7,7 +7,7 @@ import org.pokerpg.rom.Rom
 /**
  * @author Alycia <https://github.com/alycii>
  */
-object PokemonNames : Definition<String>(DefinitionType.PokemonNames) {
+class PokemonNames(address: Int) : Definition<String>(type = DefinitionType.PokemonNames, address = address) {
 
     /**
      * Returns the Pokémon name corresponding to the given index.
@@ -23,7 +23,7 @@ object PokemonNames : Definition<String>(DefinitionType.PokemonNames) {
         val adjustedIndex = if (patched) index + 10 else index
 
         // Calculate the offset for the Pokémon name in the ROM
-        val nameOffset = addresses.pokemonNames + (adjustedIndex * nameLength)
+        val nameOffset = address + (adjustedIndex * nameLength)
 
         // If the ROM is patched, add 2 to the offset
         val finalOffset = if (patched) nameOffset + 2 else nameOffset

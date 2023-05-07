@@ -1,1 +1,7 @@
-pokemon-names: 0x245EE0
+roms:
+  - game-code: BPRE # Fire Red (English)
+    structure:
+      pokemon-names: 0x245EE0
+  - game-code: BPGE # Leaf Green (English)
+    structure:
+      pokemon-names: 0x245EBC

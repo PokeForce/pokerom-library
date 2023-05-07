@@ -19,9 +19,12 @@ object RomLoader {
     @Throws(IOException::class)
     fun Rom.loadAddresses(): Rom {
         val romAddresses = Properties()
-        romAddresses.loadYaml(Paths.get("./data/rom-addresses.yml").toFile())
-        addresses.pokemonNames = romAddresses.getOrDefault("pokemon-names", 0)
-        registerDefinitions(PokemonNames)
+        romAddresses.loadRomAddresses(Paths.get("./data/rom-addresses.yml").toFile())
+        registerDefinitions(
+            PokemonNames(
+                address = romAddresses.getOrDefault(romName = gameCode, key = "pokemon-names", default = 0)
+            )
+        )
         return this
     }
 

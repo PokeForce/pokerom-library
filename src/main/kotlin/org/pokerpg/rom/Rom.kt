@@ -58,24 +58,11 @@ class Rom(var file: File) {
     lateinit var data: ByteArray
 
     /**
-     * The addresses where specific information about the ROM can be found.
-     * Examples: Pokémon names, sprites, maps, etc.
-     *
-     * Added to the ROM at runtime to in order to support different types of
-     * roms
-     */
-    var addresses = RomAddresses()
-
-    /**
      * Updates flags for the ROM if it is a specific game version.
      */
     fun setFlags() {
-        when (gameCode) {
-            "BPRE" -> {
-                if (buffer.readByte(0x427).toInt() == 28) {
-                    patched = true
-                }
-            }
+        if (buffer.readByte(0x427).toInt() == 28) {
+            patched = true
         }
     }
 
