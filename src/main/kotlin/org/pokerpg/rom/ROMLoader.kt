@@ -17,7 +17,7 @@ object RomLoader {
      * @return the current ROM instance.
      */
     @Throws(IOException::class)
-    fun Rom.loadAddresses(): Rom {
+    fun Rom.loadDefinitions(): Rom {
         val romAddresses = Properties()
         romAddresses.loadRomAddresses(Paths.get("./data/rom-addresses.yml").toFile())
         registerDefinitions(
