@@ -43,6 +43,7 @@ object RomLoader {
         gameName = buffer.readString(0xA0, 12).trim()
         gameCreator = buffer.readString(0xB0, 2)
         setFlags()
+        loadDefinitions()
     }
 
 
