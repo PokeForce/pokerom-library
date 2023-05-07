@@ -11,7 +11,7 @@ import java.io.File
  */
 class Properties {
 
-    private val properties = hashMapOf<String, Any?>()
+    val properties = hashMapOf<String, Any?>()
 
     /**
      * Gets the property associated with the [key]. If it cannot be found, it will

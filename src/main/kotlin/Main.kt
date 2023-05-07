@@ -1,8 +1,8 @@
 import org.pokerpg.definitions.DefinitionType
-import org.pokerpg.util.PIKACHU
 import org.pokerpg.rom.Rom
 import org.pokerpg.rom.RomLoader.load
 import org.pokerpg.rom.RomLoader.loadAddresses
+import org.pokerpg.util.PIKACHU
 import java.nio.file.Paths
 
 /**

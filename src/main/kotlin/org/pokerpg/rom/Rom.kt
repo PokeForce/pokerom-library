@@ -1,9 +1,9 @@
 package org.pokerpg.rom
 
-import org.pokerpg.io.Buffer
-import org.pokerpg.io.PokemonText
 import org.pokerpg.definitions.Definition
 import org.pokerpg.definitions.DefinitionType
+import org.pokerpg.io.Buffer
+import org.pokerpg.io.HexToString
 import java.io.File
 import java.nio.file.Paths
 import java.util.logging.Level
@@ -22,13 +22,6 @@ class Rom(var file: File) {
      * It allows for efficient retrieval of definitions by their type.
      */
     private val definitionsMap: MutableMap<DefinitionType, Definition<*>> = mutableMapOf()
-
-    /**
-     * Initializes the class by loading the Pokémon text data from the poketable.ini file.
-     */
-    init {
-        PokemonText.loadFromFile(Paths.get("./data/poketable.ini").toFile())
-    }
 
     /**
      * The game code of the ROM.
