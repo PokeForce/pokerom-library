@@ -30,6 +30,10 @@ class ItemDefinition(vararg address: Int) : Definition<Item>(type = DefinitionTy
 
         // Read the item properties
         val name = buffer.getPokemonString(ITEM_NAME_SIZE)
+        if(name.contains("?????")) {
+            return Item(name = "null")
+        }
+
         val idx = buffer.readShort()
         val price = buffer.readShort()
         val holdEffect = buffer.readByte()
@@ -83,20 +87,20 @@ class ItemDefinition(vararg address: Int) : Definition<Item>(type = DefinitionTy
  */
 data class Item(
     val name: String,
-    val index: Int,
-    val price: Int,
-    val holdEffect: Byte,
-    val parameter: Byte,
-    val description: String,
-    val mysteryValue: Int,
-    val pocketSlot: Byte,
-    val type: Byte,
-    val usageOffset: Int,
-    val battleUsage: Long,
-    val battleUsageOffset: Int,
-    val extraParameter: Long,
-    val sprite: RenderedImage = BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB),
-    val id: Int,
+    val index: Int = -1,
+    val price: Int = -1,
+    val holdEffect: Byte = -1,
+    val parameter: Byte = -1,
+    val description: String = "",
+    val mysteryValue: Int = -1,
+    val pocketSlot: Byte = -1,
+    val type: Byte = -1,
+    val usageOffset: Int = -1,
+    val battleUsage: Long = 0L,
+    val battleUsageOffset: Int = -1,
+    val extraParameter: Long = 0L,
+    val sprite: RenderedImage = BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB),
+    val id: Int = -1,
 )
 
 /**
