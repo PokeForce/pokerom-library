@@ -39,7 +39,7 @@ class Rom(var file: File) {
     /**
      * Indicates whether the ROM has been patched.
      */
-    var patched: Boolean = false
+    private var patched: Boolean = false
 
     /**
      * Indicates whether the ROM has a real-time clock.

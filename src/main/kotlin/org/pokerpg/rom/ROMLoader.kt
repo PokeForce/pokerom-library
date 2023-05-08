@@ -24,10 +24,13 @@ object RomLoader {
         romAddresses.loadRomAddresses(Paths.get("./data/rom-addresses.yml").toFile())
         registerDefinitions(
             PkmnNameDefinition(
-                address = romAddresses.getOrDefault(romName = gameCode, key = "pokemon-names", default = 0)
+                address = intArrayOf(romAddresses.getOrDefault(romName = gameCode, key = "pokemon-names", default = 0))
             ),
             ItemDefinition(
-                address = romAddresses.getOrDefault(romName = gameCode, key = "items", default = 0)
+                address = intArrayOf(
+                    romAddresses.getOrDefault(romName = gameCode, key = "items", default = 0),
+                    romAddresses.getOrDefault(romName = gameCode, key = "item-sprites", default = 0),
+                )
             )
         )
         return this

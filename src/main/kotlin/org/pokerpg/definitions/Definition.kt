@@ -11,7 +11,8 @@ import org.pokerpg.rom.Rom
  *
  * @author Alycia <https://github.com/alycii>
  */
-abstract class Definition<T>(val type: DefinitionType, val address: Int) {
+abstract class Definition<T>(val type: DefinitionType, protected vararg val addresses: Int) {
+
     /**
      * Retrieves the definition value from the ROM at the specified index.
      *

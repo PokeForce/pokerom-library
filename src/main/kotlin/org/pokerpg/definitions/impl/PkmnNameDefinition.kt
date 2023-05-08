@@ -7,7 +7,7 @@ import org.pokerpg.rom.Rom
 /**
  * @author Alycia <https://github.com/alycii>
  */
-class PkmnNameDefinition(address: Int) : Definition<String>(type = DefinitionType.PokemonNames, address = address) {
+class PkmnNameDefinition(vararg address: Int) : Definition<String>(type = DefinitionType.PokemonNames, addresses = address) {
 
     /**
      * Returns the Pokémon name corresponding to the given index.
@@ -20,7 +20,7 @@ class PkmnNameDefinition(address: Int) : Definition<String>(type = DefinitionTyp
         val nameLength = 11
 
         // Calculate the offset for the Pokémon name in the ROM
-        val nameOffset = address + (index * nameLength)
+        val nameOffset = addresses.first() + (index * nameLength)
 
         // Read and return the Pokémon name from the ROM buffer
         return buffer.readPokemonString(nameOffset, nameLength)

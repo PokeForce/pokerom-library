@@ -2,7 +2,7 @@
 </p>
 
 # PokéROM Kotlin Library
-Welcome to PokéROM Library, a modern library for reading and writing to Pokemon Generation III ROMs. Written in Kotlin, this library will give you the ability to read data such as Pokemon names, weight, moves, evolution data, etc, as well as create sprites, tilesets and more. The intended use of this library is for PokeRPG's client to provide users their own method of extracting game data in order to play the MMORPG. 
+Welcome to PokéROM Library, a modern library for reading and writing to Pokémon Generation III ROMs. Written in Kotlin, this library will give you the ability to read data such as Pokémon names, weight, moves, evolution data, etc., as well as create sprites, tilesets and more. The intended use of this library is for PokeRPG's client to provide users their own method of extracting game data in order to play the MMORPG. 
 
 ---
 

@@ -3,14 +3,18 @@ package org.pokerpg.definitions.impl
 import org.pokerpg.definitions.Definition
 import org.pokerpg.definitions.DefinitionType
 import org.pokerpg.rom.Rom
+import org.pokerpg.rom.graphics.ImageUtils
+import java.awt.image.BufferedImage
+import java.awt.image.RenderedImage
+import java.util.*
 
 /**
  * A class representing a definition of a Pokémon item.
  *
- * @property address The offset of the item definition in the ROM data.
+ * @property addresses The offset of the item definition in the ROM data.
  * @constructor Creates a new instance of the [ItemDefinition] class.
  */
-class ItemDefinition(address: Int) : Definition<Item>(type = DefinitionType.Items, address = address) {
+class ItemDefinition(vararg address: Int) : Definition<Item>(type = DefinitionType.Items, addresses = address) {
 
     /**
      * Returns the item corresponding to the given index.
@@ -19,28 +23,33 @@ class ItemDefinition(address: Int) : Definition<Item>(type = DefinitionType.Item
      * @return The item at the specified index, or `null` if the index is out of range.
      */
     private fun Rom.getItem(index: Int): Item {
-        val itemAddress = address + (index * ITEM_SIZE)
+        val itemAddress = addresses[0] + (index * ITEM_SIZE)
+        val spriteAddress = addresses[1] + (index * SPRITE_SIZE)
+
         buffer.position(itemAddress)
 
         // Read the item properties
         val name = buffer.getPokemonString(ITEM_NAME_SIZE)
+        val idx = buffer.readShort()
+        val price = buffer.readShort()
+        val holdEffect = buffer.readByte()
+        val parameter = buffer.readByte()
+        val description = buffer.readPokemonString(buffer.readInt())
+        val mysteryValue = buffer.readShort()
+        val pocketSlot = buffer.readByte()
+        val type = buffer.readByte()
+        val usageOffset = buffer.readInt()
+        val battleUsage = buffer.readLong()
+        val battleUsageOffset = buffer.readInt()
+        val extraParameter = buffer.readLong()
 
-        return Item(
-            name = name,
-            index = buffer.readShort(),
-            price = buffer.readShort(),
-            holdEffect = buffer.readByte(),
-            parameter = buffer.readByte(),
-            description = buffer.readPokemonString(buffer.readInt().toInt()),
-            mysteryValue = buffer.readShort(),
-            pocketSlot = buffer.readByte(),
-            type = buffer.readByte(),
-            usageOffset = buffer.readInt(),
-            battleUsage = buffer.readLong(),
-            battleUsageOffset = buffer.readInt(),
-            extraParameter = buffer.readLong(),
-            id = index
-        )
+        /** Load Sprite Data **/
+        buffer.position(spriteAddress)
+        val imageOffset = buffer.readInt()
+        val palette = ImageUtils.getPalette(this, buffer.readInt())
+        val sprite = ImageUtils.getImage(this, imageOffset, palette, 24, 24).toBufferedImage()
+
+        return Item(name, idx, price, holdEffect, parameter, description, mysteryValue, pocketSlot, type, usageOffset, battleUsage, battleUsageOffset, extraParameter, sprite, index)
     }
 
     override fun getDefinition(rom: Rom, index: Int): Item {
@@ -49,6 +58,7 @@ class ItemDefinition(address: Int) : Definition<Item>(type = DefinitionType.Item
 
     companion object {
         private const val ITEM_SIZE = 44
+        private const val SPRITE_SIZE = 8
         private const val ITEM_NAME_SIZE = 14
     }
 }
@@ -61,7 +71,7 @@ class ItemDefinition(address: Int) : Definition<Item>(type = DefinitionType.Item
  * @property price The price of the item.
  * @property holdEffect The hold effect of the item.
  * @property parameter The parameter of the item.
- * @property descriptionOffset The offset to the description of the item.
+ * @property description The description of the item.
  * @property mysteryValue The mystery value of the item.
  * @property pocketSlot The pocket slot of the item.
  * @property type The type of the item.
@@ -81,10 +91,11 @@ data class Item(
     val mysteryValue: Int,
     val pocketSlot: Byte,
     val type: Byte,
-    val usageOffset: Long,
+    val usageOffset: Int,
     val battleUsage: Long,
-    val battleUsageOffset: Long,
+    val battleUsageOffset: Int,
     val extraParameter: Long,
+    val sprite: RenderedImage = BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB),
     val id: Int,
 )
 

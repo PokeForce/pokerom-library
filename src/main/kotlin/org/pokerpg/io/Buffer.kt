@@ -1,7 +1,11 @@
 package org.pokerpg.io
 
+import me.hugmanrique.pokedata.compression.CompressUtils
+import me.hugmanrique.pokedata.compression.HexInputStream
 import org.pokerpg.io.HexToString.toPokemonString
 import org.pokerpg.rom.Rom
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 
 /**
  * A class representing a buffer used to read data from a ROM file.
@@ -44,7 +48,7 @@ class Buffer(private val rom: Rom) {
      * @param size The number of bytes to read.
      * @return The ByteArray read from the buffer.
      */
-    private fun readBytes(offset: Int, size: Int = 1): ByteArray {
+    fun readBytes(offset: Int, size: Int = 1): ByteArray {
         return BufferUtils.getBytes(rom.data, offset, size)
     }
 
@@ -71,9 +75,9 @@ class Buffer(private val rom: Rom) {
     }
 
     /**
-     * Reads a Pokemon string from the buffer at the current offset with the specified length.
+     * Reads a Pokémon string from the buffer at the current offset with the specified length.
      *
-     * @param length The length of the Pokemon string to read.
+     * @param length The length of the Pokémon string to read.
      * @return The converted string.
      */
     fun getPokemonString(length: Int): String {
@@ -88,13 +92,13 @@ class Buffer(private val rom: Rom) {
      * @param fullPointer If false, the high byte of the integer will be adjusted if necessary.
      * @return The integer read from the buffer as a Long.
      */
-    fun readInt(fullPointer: Boolean = false): Long {
+    fun readInt(fullPointer: Boolean = false): Int {
         val data: ByteArray = BufferUtils.getBytes(rom.data, position, 4)
         if (!fullPointer && data[3] >= 0x8) {
             data[3] = (data[3] - 0x8).toByte()
         }
         position += 4
-        return BufferUtils.toLong(data)
+        return BufferUtils.toLong(data).toInt()
     }
 
     /**
@@ -156,6 +160,18 @@ class Buffer(private val rom: Rom) {
 
             val byteArray = BufferUtils.getBytes(rom.data, offset, i)
             byteArray.toPokemonString()
+        }
+    }
+
+    fun decompress(offset: Int): ByteArray? {
+        val stream: InputStream = ByteArrayInputStream(rom.data)
+        val hexStream = HexInputStream(stream)
+        return try {
+            stream.skip(offset.toLong())
+            CompressUtils.decompress(hexStream).map { it.toByte() }.toByteArray()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 }
