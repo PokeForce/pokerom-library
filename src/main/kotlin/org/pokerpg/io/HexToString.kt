@@ -44,13 +44,16 @@ object HexToString {
     fun ByteArray.toPokemonString(): String {
         val converted = StringBuilder()
         this.forEach { byte ->
-            val value = hexTable[String.format("%02X", byte)]
+            val unsignedByte = byte.toUByte().toInt()
+            val value = hexTable[String.format("%02X", unsignedByte)]
             converted.append(value)
         }
 
         val text = converted.toString().trim()
-        return replaceLineBreaks(text)
+        return text.replace("|br|", " ")
     }
+
+
 
 
     /**

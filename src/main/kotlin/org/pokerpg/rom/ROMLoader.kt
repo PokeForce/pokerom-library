@@ -1,6 +1,8 @@
 package org.pokerpg.rom
 
-import org.pokerpg.definitions.impl.PokemonNames
+import org.pokerpg.definitions.impl.ItemDefinition
+import org.pokerpg.definitions.impl.PkmnNameDefinition
+import org.pokerpg.io.Buffer
 import org.pokerpg.io.HexToString
 import org.pokerpg.util.Properties
 import java.io.IOException
@@ -21,8 +23,11 @@ object RomLoader {
         val romAddresses = Properties()
         romAddresses.loadRomAddresses(Paths.get("./data/rom-addresses.yml").toFile())
         registerDefinitions(
-            PokemonNames(
+            PkmnNameDefinition(
                 address = romAddresses.getOrDefault(romName = gameCode, key = "pokemon-names", default = 0)
+            ),
+            ItemDefinition(
+                address = romAddresses.getOrDefault(romName = gameCode, key = "items", default = 0)
             )
         )
         return this
@@ -39,6 +44,7 @@ object RomLoader {
     fun Rom.load() = apply {
         HexToString.loadFromYaml(Paths.get("./data/hex-strings.yml").toString())
         loadRomBytes()
+        buffer = Buffer(this)
         gameCode = buffer.readString(0xAC, 4)
         gameName = buffer.readString(0xA0, 12).trim()
         gameCreator = buffer.readString(0xB0, 2)

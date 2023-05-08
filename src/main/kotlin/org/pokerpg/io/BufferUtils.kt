@@ -16,7 +16,7 @@ object BufferUtils {
      * @param bytes The input byte array.
      * @return The converted 32-bit integer (Long).
      */
-    fun toInt32(bytes: ByteArray): Long {
+    fun toLong(bytes: ByteArray): Long {
         return ((bytes[0].toInt() and 0xFF) +
                 ((bytes[1].toInt() and 0xFF) shl 8) +
                 ((bytes[2].toInt() and 0xFF) shl 16) +

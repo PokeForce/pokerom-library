@@ -49,8 +49,7 @@ class Rom(var file: File) {
     /**
      * The buffer attached to this ROM.
      */
-    val buffer: Buffer
-        get() = Buffer(this)
+    lateinit var buffer: Buffer
 
     /**
      * The data provided by the ROM.
@@ -63,6 +62,7 @@ class Rom(var file: File) {
     fun setFlags() {
         if (buffer.readByte(0x427).toInt() == 28) {
             patched = true
+            gameCode += "_patched"
         }
     }
 

@@ -1,7 +1,15 @@
 roms:
-  - game-code: BPRE # Fire Red (English)
+  - game-code: BPRE # Fire Red v1.0 (English)
     structure:
       pokemon-names: 0x245EE0
+      items: 0x3DB028
+
+  - game-code: BPRE_patched # Fire Red v1.1 (English)
+    structure:
+      pokemon-names: 0x245EEC
+      items: 0x3DB098
+
   - game-code: BPGE # Leaf Green (English)
     structure:
       pokemon-names: 0x245EBC
+      items: 0x3DAE64
