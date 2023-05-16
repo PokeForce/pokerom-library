@@ -86,10 +86,26 @@ class Rom(var file: File) {
      * @return The definition value of type T for the given DefinitionType and index.
      * @throws IllegalArgumentException If the provided DefinitionType is not found in the definitionsMap.
      */
-    fun <T> definition(type: DefinitionType, index: Int): T {
+    fun <T> definition(type: DefinitionType, index: Int): T? {
         val definition = definitionsMap[type] ?: throw IllegalArgumentException("Invalid DefinitionType: $type")
         @Suppress("UNCHECKED_CAST")
         return (definition as Definition<T>).getDefinition(this, index)
+    }
+
+
+    /**
+     * Retrieves a definition for a given DefinitionType and index.
+     *
+     * @param T The expected type of the returned definition value.
+     * @param type The DefinitionType associated with the desired definition.
+     * @param index The index to be used when calling the getDefinition function in the Definition class.
+     * @return The definition value of type T for the given DefinitionType and index.
+     * @throws IllegalArgumentException If the provided DefinitionType is not found in the definitionsMap.
+     */
+    fun <T> definition(type: DefinitionType, index: Int, subIndex: Int): T? {
+        val definition = definitionsMap[type] ?: throw IllegalArgumentException("Invalid DefinitionType: $type")
+        @Suppress("UNCHECKED_CAST")
+        return (definition as Definition<T>).getDefinition(this, index, subIndex)
     }
 
 

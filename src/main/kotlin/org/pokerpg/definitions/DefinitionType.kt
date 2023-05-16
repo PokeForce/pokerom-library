@@ -5,5 +5,7 @@ package org.pokerpg.definitions
  */
 enum class DefinitionType {
     PokemonNames,
-    Items
+    Items,
+    MapGroup,
+    MapHeader
 }

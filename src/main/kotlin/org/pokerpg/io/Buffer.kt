@@ -18,7 +18,7 @@ class Buffer(private val rom: Rom) {
     /**
      * The current offset position of the Buffer
      */
-    private var position: Int = 0
+    var position: Int = 0
 
     /**
      * Reads a single byte from the buffer at the current offset.
@@ -69,7 +69,7 @@ class Buffer(private val rom: Rom) {
      * @param offset The offset of the short in the ROM data.
      * @return The short read from the buffer.
      */
-    private fun readShort(offset: Int): Int {
+    fun readShort(offset: Int): Int {
         val words: IntArray = BufferUtils.toInts(readBytes(offset, 2))
         return (words[1] shl 8) + words[0]
     }
@@ -98,6 +98,20 @@ class Buffer(private val rom: Rom) {
             data[3] = (data[3] - 0x8).toByte()
         }
         position += 4
+        return BufferUtils.toLong(data).toInt()
+    }
+
+    /**
+     * Reads an integer from the buffer at the specified position.
+     *
+     * @param fullPointer If false, the high byte of the integer will be adjusted if necessary.
+     * @return The integer read from the buffer as a Long.
+     */
+    fun readInt(position: Int = -1, fullPointer: Boolean = false): Int {
+        val data: ByteArray = BufferUtils.getBytes(rom.data, position, 4)
+        if (!fullPointer) {
+            data[3] = 0
+        }
         return BufferUtils.toLong(data).toInt()
     }
 
@@ -174,4 +188,5 @@ class Buffer(private val rom: Rom) {
             null
         }
     }
+
 }

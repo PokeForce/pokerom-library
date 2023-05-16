@@ -1,6 +1,8 @@
 package org.pokerpg.rom
 
 import org.pokerpg.definitions.impl.ItemDefinition
+import org.pokerpg.definitions.impl.MapGroupDefinition
+import org.pokerpg.definitions.impl.MapHeaderDefinition
 import org.pokerpg.definitions.impl.PkmnNameDefinition
 import org.pokerpg.io.Buffer
 import org.pokerpg.io.HexToString
@@ -31,11 +33,16 @@ object RomLoader {
                     romAddresses.getOrDefault(romName = gameCode, key = "items", default = 0),
                     romAddresses.getOrDefault(romName = gameCode, key = "item-sprites", default = 0),
                 )
-            )
+            ),
+            MapGroupDefinition(
+                address = IntArray(4) {
+                    romAddresses.getOrDefault(romName = gameCode, key = "bank-$it", default = 0)
+                }
+            ),
+            MapHeaderDefinition()
         )
         return this
     }
-
 
     /**
      * Loads a ROM from the roms attached file, reads the metadata, and sets the ROM object's properties.
@@ -80,4 +87,20 @@ object RomLoader {
             data = bytes
         }
     }
+
+    /**
+     * Retrieves the address of a specific ROM data location by its name.
+     *
+     * @param addressName The name of the address location in the ROM data (e.g., "map-label", "bank-0").
+     * @return The address as an Int, or the default value (0) if the address name is not found.
+     *
+     * @throws IOException If there is an issue reading the "rom-addresses.yml" file.
+     */
+    fun Rom.getAddress(addressName: String) : Int {
+        val romAddresses = Properties()
+        romAddresses.loadRomAddresses(Paths.get("./data/rom-addresses.yml").toFile())
+        return romAddresses.getOrDefault(romName = gameCode, key = addressName, default = 0)
+    }
+
+
 }
