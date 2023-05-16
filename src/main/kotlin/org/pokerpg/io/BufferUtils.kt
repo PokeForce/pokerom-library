@@ -74,39 +74,39 @@ object BufferUtils {
     }
 
     /**
-     * Retrieves a portion of a byte array starting at the specified offset.
+     * Retrieves a portion of a byte array starting at the specified position.
      *
      * @param array The input byte array.
-     * @param offset The starting index.
+     * @param position The starting index.
      * @param length The number of bytes to retrieve.
      * @return The resulting byte array.
      */
-    fun getBytes(array: ByteArray, offset: Int, length: Int): ByteArray {
-        return array.copyOfRange(offset, offset + length)
+    fun getBytes(array: ByteArray, position: Int, length: Int): ByteArray {
+        return array.copyOfRange(position, position + length)
     }
 
     /**
-     * Grabs a portion of a byte array starting at the specified offset and converts it to an integer array.
+     * Grabs a portion of a byte array starting at the specified position and converts it to an integer array.
      *
      * @param array The input byte array.
-     * @param offset The starting index.
+     * @param position The starting index.
      * @param length The number of bytes to grab.
      * @return The resulting integer array.
      */
-    fun grabBytesAsInts(array: ByteArray, offset: Int, length: Int): IntArray {
-        return array.copyOfRange(offset, offset + length).map { it.toInt() and 0xFF }.toIntArray()
+    fun grabBytesAsInts(array: ByteArray, position: Int, length: Int): IntArray {
+        return array.copyOfRange(position, position + length).map { it.toInt() and 0xFF }.toIntArray()
     }
 
     /**
-     * Inserts a byte array into another byte array at the specified offset.
+     * Inserts a byte array into another byte array at the specified position.
      *
      * @param array The target byte array.
      * @param toPut The byte array to insert.
-     * @param offset The starting index.
+     * @param position The starting index.
      * @return The modified target byte array.
      */
-    fun putBytes(array: ByteArray, toPut: ByteArray, offset: Int): ByteArray {
-        toPut.copyInto(array, offset)
+    fun putBytes(array: ByteArray, toPut: ByteArray, position: Int): ByteArray {
+        toPut.copyInto(array, position)
         return array
     }
 

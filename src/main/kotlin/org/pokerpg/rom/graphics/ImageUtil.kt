@@ -23,19 +23,19 @@ object ImageUtils {
      * Gets a palette from the ROM at the specified pointer, with the specified image type and cache option.
      *
      * @param rom The ROM.
-     * @param offset The offset to the palette in the ROM.
+     * @param position The position to the palette in the ROM.
      * @param type The image type.
      * @param cache Whether to cache the palette.
      * @return The palette.
      */
-    private fun getPalette(rom: Rom, offset: Int, type: ImageType, cache: Boolean = true): Palette {
-        if (cache && paletteCache.containsKey(offset)) {
-            return paletteCache.getOrDefault(offset, 0) as Palette
+    private fun getPalette(rom: Rom, position: Int, type: ImageType, cache: Boolean = true): Palette {
+        if (cache && paletteCache.containsKey(position)) {
+            return paletteCache.getOrDefault(position, 0) as Palette
         }
-        val data = rom.buffer.decompress(offset) ?: return Palette()
+        val data = rom.buffer.decompress(position) ?: return Palette()
         val palette = Palette(type, data)
         if (cache) {
-            paletteCache[offset] = palette
+            paletteCache[position] = palette
         }
         return palette
     }
@@ -44,16 +44,16 @@ object ImageUtils {
      * Gets an image from the ROM at the specified pointer, with the specified palette, width, and height.
      *
      * @param rom The ROM.
-     * @param offset The offset to the image in the ROM.
+     * @param position The position to the image in the ROM.
      * @param palette The palette.
      * @param width The width of the image.
      * @param height The height of the image.
      * @return The ROM image.
      */
-    fun getImage(rom: Rom, offset: Int, palette: Palette, width: Int, height: Int): RomImage {
-        val data = rom.buffer.decompress(offset)
+    fun getImage(rom: Rom, position: Int, palette: Palette, width: Int, height: Int): RomImage {
+        val data = rom.buffer.decompress(position)
         if (data == null) {
-            val imageData = rom.buffer.readBytes(offset, width * height)
+            val imageData = rom.buffer.readBytes(position, width * height)
             return loadRawSprite(imageData, palette, width, height)
         }
         return RomImage(palette, data, width, height)
@@ -72,11 +72,11 @@ object ImageUtils {
         val colors = ByteArray(bits.size * 8)
 
         for (i in bits.indices) {
-            val offset = i * 8
+            val position = i * 8
             val data = bits[i].toInt()
 
             for (j in 0..7) {
-                colors[offset + j] = ((data shr j) and 1).toByte()
+                colors[position + j] = ((data shr j) and 1).toByte()
             }
         }
 

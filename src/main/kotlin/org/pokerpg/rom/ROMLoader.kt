@@ -75,13 +75,13 @@ object RomLoader {
             val length = file.length()
             val bytes = ByteArray(length.toInt())
 
-            var offset = 0
+            var position = 0
             var n: Int
 
-            while (offset < bytes.size) {
-                n = inputStream.read(bytes, offset, bytes.size - offset)
+            while (position < bytes.size) {
+                n = inputStream.read(bytes, position, bytes.size - position)
                 if (n < 0) break
-                offset += n
+                position += n
             }
 
             data = bytes

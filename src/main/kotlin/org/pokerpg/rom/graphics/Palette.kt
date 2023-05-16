@@ -54,13 +54,13 @@ class Palette {
     constructor(type: ImageType, data: ByteArray) : this(type, BufferUtils.toInts(data))
 
     /**
-     * Constructs a palette from the given image type, ROM, and offset.
+     * Constructs a palette from the given image type, ROM, and position.
      *
      * @param type The image type.
      * @param rom The ROM.
-     * @param offset The offset in the ROM.
+     * @param position The position in the ROM.
      */
-    constructor(type: ImageType, rom: Rom, offset: Int) : this(type, rom.buffer.readBytes(offset, type.imageSize))
+    constructor(type: ImageType, rom: Rom, position: Int) : this(type, rom.buffer.readBytes(position, type.imageSize))
 
     /**
      * Constructs a palette from a list of colors.

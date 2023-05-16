@@ -21,7 +21,7 @@ class Buffer(private val rom: Rom) {
     var position: Int = 0
 
     /**
-     * Reads a single byte from the buffer at the current offset.
+     * Reads a single byte from the buffer at the current position.
      *
      * @return The byte read from the buffer.
      */
@@ -32,28 +32,28 @@ class Buffer(private val rom: Rom) {
     }
 
     /**
-     * Reads a single byte from the buffer at the specified offset.
+     * Reads a single byte from the buffer at the specified position.
      *
-     * @param offset The offset of the byte in the ROM data.
+     * @param position The position of the byte in the ROM data.
      * @return The byte read from the buffer.
      */
-    fun readByte(offset: Int): Byte {
-        return readBytes(offset)[0]
+    fun readByte(position: Int): Byte {
+        return readBytes(position)[0]
     }
 
     /**
-     * Reads a specified number of bytes from the buffer, starting at the specified offset.
+     * Reads a specified number of bytes from the buffer, starting at the specified position.
      *
-     * @param offset The offset of the bytes in the ROM data.
+     * @param position The position of the bytes in the ROM data.
      * @param size The number of bytes to read.
      * @return The ByteArray read from the buffer.
      */
-    fun readBytes(offset: Int, size: Int = 1): ByteArray {
-        return BufferUtils.getBytes(rom.data, offset, size)
+    fun readBytes(position: Int, size: Int = 1): ByteArray {
+        return BufferUtils.getBytes(rom.data, position, size)
     }
 
     /**
-     * Reads a short from the buffer at the current offset.
+     * Reads a short from the buffer at the current position.
      *
      * @return The short read from the buffer.
      */
@@ -64,18 +64,18 @@ class Buffer(private val rom: Rom) {
     }
 
     /**
-     * Reads a short from the buffer at the specified offset.
+     * Reads a short from the buffer at the specified position.
      *
-     * @param offset The offset of the short in the ROM data.
+     * @param position The position of the short in the ROM data.
      * @return The short read from the buffer.
      */
-    fun readShort(offset: Int): Int {
-        val words: IntArray = BufferUtils.toInts(readBytes(offset, 2))
+    fun readShort(position: Int): Int {
+        val words: IntArray = BufferUtils.toInts(readBytes(position, 2))
         return (words[1] shl 8) + words[0]
     }
 
     /**
-     * Reads a Pokémon string from the buffer at the current offset with the specified length.
+     * Reads a Pokémon string from the buffer at the current position with the specified length.
      *
      * @param length The length of the Pokémon string to read.
      * @return The converted string.
@@ -87,7 +87,7 @@ class Buffer(private val rom: Rom) {
     }
 
     /**
-     * Reads an integer from the buffer at the current offset.
+     * Reads an integer from the buffer at the current position.
      *
      * @param fullPointer If false, the high byte of the integer will be adjusted if necessary.
      * @return The integer read from the buffer as a Long.
@@ -116,7 +116,7 @@ class Buffer(private val rom: Rom) {
     }
 
     /**
-     * Reads a Long from the buffer at the current offset.
+     * Reads a Long from the buffer at the current position.
      *
      * @return The Long read from the buffer.
      */
@@ -126,62 +126,62 @@ class Buffer(private val rom: Rom) {
     }
 
     /**
-     * Sets the current offset of the buffer.
+     * Sets the current position of the buffer.
      *
-     * @param offset The new offset.
+     * @param position The new position.
      */
-    fun position(offset: Int) {
-        if (offset > 0x08000000) {
-            this.position = offset and 0x1FFFFFF
+    fun position(position: Int) {
+        if (position > 0x08000000) {
+            this.position = position and 0x1FFFFFF
         } else {
-            this.position = offset
+            this.position = position
         }
     }
 
     /**
-     * Reads a string from the buffer, starting at the specified offset and with the specified length.
+     * Reads a string from the buffer, starting at the specified position and with the specified length.
      *
-     * @param offset The offset of the string in the ROM data.
+     * @param position The position of the string in the ROM data.
      * @param length The length of the string to read.
      * @return The string read from the buffer.
      */
-    fun readString(offset: Int, length: Int): String {
-        return String(BufferUtils.getBytes(rom.data, offset, length))
+    fun readString(position: Int, length: Int): String {
+        return String(BufferUtils.getBytes(rom.data, position, length))
     }
 
     /**
-     * Reads and converts a Pokétext string from the specified ROM offset.
+     * Reads and converts a Pokétext string from the specified ROM position.
      *
-     * @param offset The ROM offset to start reading from.
+     * @param position The ROM position to start reading from.
      * @param length The length of the Pokétext string to read, or -1 to read until the end of the text.
-     * @return The converted string, or null if the byte array is empty or the offset is invalid.
-     * @throws IndexOutOfBoundsException If the provided offset is out of bounds for the ROM data.
+     * @return The converted string, or null if the byte array is empty or the position is invalid.
+     * @throws IndexOutOfBoundsException If the provided position is out of bounds for the ROM data.
      */
-    fun readPokemonString(offset: Int, length: Int = -1): String {
-        require(offset >= 0) { "Offset must be non-negative" }
+    fun readPokemonString(position: Int, length: Int = -1): String {
+        require(position >= 0) { "position must be non-negative" }
 
         return if (length > -1) {
-            val byteArray = BufferUtils.getBytes(rom.data, offset, length)
+            val byteArray = BufferUtils.getBytes(rom.data, position, length)
             byteArray.toPokemonString()
         } else {
             var i = 0
             var b: Byte
 
             do {
-                b = rom.data.getOrNull(offset + i) ?: break
+                b = rom.data.getOrNull(position + i) ?: break
                 i++
             } while (b.toInt() != -1)
 
-            val byteArray = BufferUtils.getBytes(rom.data, offset, i)
+            val byteArray = BufferUtils.getBytes(rom.data, position, i)
             byteArray.toPokemonString()
         }
     }
 
-    fun decompress(offset: Int): ByteArray? {
+    fun decompress(position: Int): ByteArray? {
         val stream: InputStream = ByteArrayInputStream(rom.data)
         val hexStream = HexInputStream(stream)
         return try {
-            stream.skip(offset.toLong())
+            stream.skip(position.toLong())
             CompressUtils.decompress(hexStream).map { it.toByte() }.toByteArray()
         } catch (e: Exception) {
             e.printStackTrace()

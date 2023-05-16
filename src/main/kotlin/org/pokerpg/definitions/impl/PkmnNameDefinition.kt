@@ -19,11 +19,11 @@ class PkmnNameDefinition(vararg address: Int) : Definition<String>(type = Defini
         // Name length is fixed at 11 characters
         val nameLength = 11
 
-        // Calculate the offset for the Pokémon name in the ROM
-        val nameOffset = addresses.first() + (index * nameLength)
+        // Calculate the position for the Pokémon name in the ROM
+        val namePosition = addresses.first() + (index * nameLength)
 
         // Read and return the Pokémon name from the ROM buffer
-        return buffer.readPokemonString(nameOffset, nameLength)
+        return buffer.readPokemonString(namePosition, nameLength)
     }
 
     override fun getDefinition(rom: Rom, index: Int): String {

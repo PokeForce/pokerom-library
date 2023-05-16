@@ -11,7 +11,7 @@ import java.util.*
 /**
  * A class representing a definition of a Pokémon item.
  *
- * @property addresses The offset of the item definition in the ROM data.
+ * @property addresses The position of the item definition in the ROM data.
  * @constructor Creates a new instance of the [ItemDefinition] class.
  */
 class ItemDefinition(vararg address: Int) : Definition<Item>(type = DefinitionType.Items, addresses = address) {
@@ -42,18 +42,18 @@ class ItemDefinition(vararg address: Int) : Definition<Item>(type = DefinitionTy
         val mysteryValue = buffer.readShort()
         val pocketSlot = buffer.readByte()
         val type = buffer.readByte()
-        val usageOffset = buffer.readInt()
+        val usagePosition = buffer.readInt()
         val battleUsage = buffer.readLong()
-        val battleUsageOffset = buffer.readInt()
+        val battleUsagePosition = buffer.readInt()
         val extraParameter = buffer.readLong()
 
         /** Load Sprite Data **/
         buffer.position(spriteAddress)
-        val imageOffset = buffer.readInt()
+        val imagePosition = buffer.readInt()
         val palette = ImageUtils.getPalette(this, buffer.readInt())
-        val sprite = ImageUtils.getImage(this, imageOffset, palette, 24, 24).toBufferedImage()
+        val sprite = ImageUtils.getImage(this, imagePosition, palette, 24, 24).toBufferedImage()
 
-        return Item(name, idx, price, holdEffect, parameter, description, mysteryValue, pocketSlot, type, usageOffset, battleUsage, battleUsageOffset, extraParameter, sprite, index)
+        return Item(name, idx, price, holdEffect, parameter, description, mysteryValue, pocketSlot, type, usagePosition, battleUsage, battleUsagePosition, extraParameter, sprite, index)
     }
 
     override fun getDefinition(rom: Rom, index: Int): Item {
@@ -79,9 +79,9 @@ class ItemDefinition(vararg address: Int) : Definition<Item>(type = DefinitionTy
  * @property mysteryValue The mystery value of the item.
  * @property pocketSlot The pocket slot of the item.
  * @property type The type of the item.
- * @property usageOffset The offset to the usage of the item.
+ * @property usagePosition The position to the usage of the item.
  * @property battleUsage The battle usage of the item.
- * @property battleUsageOffset The offset to the battle usage of the item.
+ * @property battleUsagePosition The position to the battle usage of the item.
  * @property extraParameter The extra parameter of the item.
  * @property id The ID of the item.
  */
@@ -95,9 +95,9 @@ data class Item(
     val mysteryValue: Int = -1,
     val pocketSlot: Byte = -1,
     val type: Byte = -1,
-    val usageOffset: Int = -1,
+    val usagePosition: Int = -1,
     val battleUsage: Long = 0L,
-    val battleUsageOffset: Int = -1,
+    val battleUsagePosition: Int = -1,
     val extraParameter: Long = 0L,
     val sprite: RenderedImage = BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB),
     val id: Int = -1,
