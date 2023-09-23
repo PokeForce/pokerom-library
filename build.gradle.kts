@@ -28,3 +28,12 @@ kotlin {
 application {
     mainClass.set("MainKt")
 }
+
+tasks.jar {
+    from("data") {
+        into("data")
+    }
+    manifest {
+        attributes["Main-Class"] = application.mainClass
+    }
+}
