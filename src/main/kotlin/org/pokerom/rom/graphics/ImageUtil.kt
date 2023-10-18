@@ -1,6 +1,6 @@
-package org.pokerpg.rom.graphics
+package org.pokerom.rom.graphics
 
-import org.pokerpg.rom.Rom
+import org.pokerom.rom.Rom
 
 /**
  * A utility class for handling images and palettes.
@@ -68,7 +68,7 @@ object ImageUtils {
      * @param height The height of the sprite.
      * @return The ROM image.
      */
-    private fun loadRawSprite(bits: ByteArray, palette: Palette, width: Int, height: Int): RomImage {
+    fun loadRawSprite(bits: ByteArray, palette: Palette, width: Int, height: Int): RomImage {
         val colors = ByteArray(bits.size * 8)
 
         for (i in bits.indices) {

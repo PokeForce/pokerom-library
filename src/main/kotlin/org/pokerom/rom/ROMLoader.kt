@@ -1,12 +1,13 @@
-package org.pokerpg.rom
+package org.pokerom.rom
 
-import org.pokerpg.definitions.impl.ItemDefinition
-import org.pokerpg.definitions.impl.MapGroupDefinition
-import org.pokerpg.definitions.impl.MapHeaderDefinition
-import org.pokerpg.definitions.impl.PkmnNameDefinition
-import org.pokerpg.io.Buffer
-import org.pokerpg.io.HexToString
-import org.pokerpg.util.Properties
+import IconDefinition
+import org.pokerom.definitions.impl.ItemDefinition
+import org.pokerom.definitions.impl.MapGroupDefinition
+import org.pokerom.definitions.impl.MapHeaderDefinition
+import org.pokerom.definitions.impl.PkmnNameDefinition
+import org.pokerom.io.Buffer
+import org.pokerom.io.HexToString
+import org.pokerom.util.Properties
 import java.io.IOException
 import java.nio.file.Paths
 
@@ -32,6 +33,13 @@ object RomLoader {
                 address = intArrayOf(
                     romAddresses.getOrDefault(romName = gameCode, key = "items", default = 0),
                     romAddresses.getOrDefault(romName = gameCode, key = "item-sprites", default = 0),
+                )
+            ),
+            IconDefinition(
+                address = intArrayOf(
+                    romAddresses.getOrDefault(romName = gameCode, key = "pokemon-icons", default = 0),
+                    romAddresses.getOrDefault(romName = gameCode, key = "icon-palette", default = 0),
+                    romAddresses.getOrDefault(romName = gameCode, key = "icon-palette-table", default = 0),
                 )
             ),
             MapGroupDefinition(

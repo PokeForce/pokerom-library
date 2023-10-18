@@ -1,6 +1,6 @@
-package org.pokerpg.definitions
+package org.pokerom.definitions
 
-import org.pokerpg.rom.Rom
+import org.pokerom.rom.Rom
 
 /**
  * An abstract base class for definitions that represent different types of data

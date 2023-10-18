@@ -1,9 +1,9 @@
-package org.pokerpg.io
+package org.pokerom.io
 
 import me.hugmanrique.pokedata.compression.CompressUtils
 import me.hugmanrique.pokedata.compression.HexInputStream
-import org.pokerpg.io.HexToString.toPokemonString
-import org.pokerpg.rom.Rom
+import org.pokerom.io.HexToString.toPokemonString
+import org.pokerom.rom.Rom
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 

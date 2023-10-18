@@ -1,4 +1,4 @@
-package org.pokerpg.rom.graphics
+package org.pokerom.rom.graphics
 
 import java.awt.Graphics
 import java.awt.Point
@@ -22,6 +22,7 @@ data class RomImage(
         data,
         Point(width, height)
     )
+
 
     /**
      * Converts the [RomImage] to a [BufferedImage].

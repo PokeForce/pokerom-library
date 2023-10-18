@@ -1,4 +1,4 @@
-package org.pokerpg.util
+package org.pokerom.util
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory

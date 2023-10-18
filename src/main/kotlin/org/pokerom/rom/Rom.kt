@@ -1,8 +1,8 @@
-package org.pokerpg.rom
+package org.pokerom.rom
 
-import org.pokerpg.definitions.Definition
-import org.pokerpg.definitions.DefinitionType
-import org.pokerpg.io.Buffer
+import org.pokerom.definitions.Definition
+import org.pokerom.definitions.DefinitionType
+import org.pokerom.io.Buffer
 import java.io.File
 import java.util.logging.Level
 import java.util.logging.Logger

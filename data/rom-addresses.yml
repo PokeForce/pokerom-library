@@ -10,6 +10,10 @@ roms:
       bank-2: 0x352204 # Special Areas
       bank-3: 0x3522F4 # Towns and Routes
       bank-4: 0x3523FC # Pallet Indoors
+      pokemon-icons: 0x3D37A0
+      icon-palette: 0x3D3740
+      icon-palette-table: 0x3D3E80
+
 
   - game-code: BPRE_patched # Fire Red v1.1 (English)
     structure:
@@ -22,6 +26,9 @@ roms:
       bank-2: 0x352274 # Special Areas
       bank-3: 0x352364 # Towns and Routes
       bank-4: 0x35246C # Pallet Indoors
+      pokemon-icons: 0x3d3810
+      icon-palette: 0x3d37b0
+      icon-palette-table: 0x3d3ef0
 
   - game-code: BPGE # Leaf Green (English)
     structure:

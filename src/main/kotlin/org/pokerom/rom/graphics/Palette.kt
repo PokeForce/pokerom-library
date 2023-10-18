@@ -1,7 +1,7 @@
-package org.pokerpg.rom.graphics
+package org.pokerom.rom.graphics
 
-import org.pokerpg.io.BufferUtils
-import org.pokerpg.rom.Rom
+import org.pokerom.io.BufferUtils
+import org.pokerom.rom.Rom
 import java.awt.Color
 
 /**

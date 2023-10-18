@@ -1,5 +1,5 @@
 @file:Suppress("unused")
-package org.pokerpg.util
+package org.pokerom.util
 
 /**
  * @author Alycia <https://github.com/alycii>

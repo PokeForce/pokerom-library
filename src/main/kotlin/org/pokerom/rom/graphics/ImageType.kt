@@ -1,4 +1,4 @@
-package org.pokerpg.rom.graphics
+package org.pokerom.rom.graphics
 
 import java.awt.Graphics
 import java.awt.image.BufferedImage
@@ -36,8 +36,12 @@ enum class ImageType(
                 color.blue,
                 if (transparency && pal == 0) 0 else 255
             )
-
-            image!!.raster.setPixel(x, y, pixel)
+            if(image == null) {
+                return
+            }
+            if(y < image.height && x < image.width) {
+                image.raster.setPixel(x, y, pixel)
+            }
         }
 
         override fun getPalette(i: Int, original: Int): Int {

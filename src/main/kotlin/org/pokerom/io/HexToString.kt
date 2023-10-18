@@ -1,6 +1,6 @@
-package org.pokerpg.io
+package org.pokerom.io
 
-import org.pokerpg.util.Properties
+import org.pokerom.util.Properties
 import java.io.File
 import java.io.IOException
 

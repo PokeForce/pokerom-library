@@ -1,9 +1,9 @@
-package org.pokerpg.definitions.impl
+package org.pokerom.definitions.impl
 
-import org.pokerpg.definitions.Definition
-import org.pokerpg.definitions.DefinitionType
-import org.pokerpg.rom.Rom
-import org.pokerpg.rom.graphics.ImageUtils
+import org.pokerom.definitions.Definition
+import org.pokerom.definitions.DefinitionType
+import org.pokerom.rom.Rom
+import org.pokerom.rom.graphics.ImageUtils
 import java.awt.image.BufferedImage
 import java.awt.image.RenderedImage
 import java.util.*
